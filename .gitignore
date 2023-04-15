@@ -4,6 +4,9 @@ note.md
 
 # DS_Store file
 .DS_Store
+
+# Material folder
+materials/
 ######
 
 # DBT
