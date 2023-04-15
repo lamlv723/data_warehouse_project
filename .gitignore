@@ -1,3 +1,11 @@
+###### Lam's ignore
+# Note file
+note.md
+
+# DS_Store file
+.DS_Store
+######
+
 # DBT
 target/
 dbt_packages/
@@ -145,6 +153,3 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
-
-# ignore note file
-note.md
