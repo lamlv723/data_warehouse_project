@@ -9,4 +9,5 @@ SELECT
   , quantity	AS quantity
   , unit_price	AS unit_price
   , quantity * unit_price AS gross_amount --Lesson 0102: Calculated measure
+  , stock_item_id AS product_key --Lesson 0103b
 FROM `vit-lam-data.wide_world_importers.sales__order_lines`
