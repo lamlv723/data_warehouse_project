@@ -14,10 +14,10 @@ WITH dim_product__source AS (
 
 , dim_product__cast_type AS (
   SELECT
-    CAST ( stock_item_id AS INTEGER ) AS product_key
-    , CAST ( stock_item_name AS STRING ) AS product_name
-    , CAST ( brand AS STRING ) AS brand_name
-  FROM dim_product__source
+    CAST ( product_key AS INTEGER ) AS product_key
+    , CAST ( product_name AS STRING ) AS product_name
+    , CAST ( brand_name AS STRING ) AS brand_name
+  FROM dim_product__rename_column
 )
 
 SELECT
