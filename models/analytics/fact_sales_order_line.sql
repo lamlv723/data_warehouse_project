@@ -34,15 +34,22 @@ WITH fact_sales_order_line__source AS (
 SELECT
   fact_line.sales_order_line_key
   , fact_line.sales_order_key
-  , fact_header.customer_key
   , fact_line.product_key
+  , fact_header.customer_key -- Processed in stg model
   , fact_line.quantity
   , fact_line.unit_price
 FROM fact_sales_order_line__calculated_measure_gross_amount AS fact_line
--- Lesson-0106b: JOIN staging table
-LEFT JOIN `dbt-project-382304.wide_world_importers_dwh_staging.stg_fact_sales_order` AS fact_header
+-- Lesson-0106b: dbt ref
+LEFT JOIN {{ ref ("stg_fact_sales_order") }} AS fact_header 
 ON fact_line.sales_order_key = fact_header.sales_order_key
+
+------------------------------------------------------------
+
+-- Lesson-0106b: JOIN staging table
+-- .....
+-- LEFT JOIN `dbt-project-382304.wide_world_importers_dwh_staging.stg_fact_sales_order` AS fact_header
 -- USING (sales_order_key)
+
 ------------------------------------------------------------
 
 -- Lesson-0104b: Cast data type
