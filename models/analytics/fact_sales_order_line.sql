@@ -38,6 +38,7 @@ SELECT
   , fact_header.customer_key -- Processed in stg model
   , fact_line.quantity
   , fact_line.unit_price
+  , fact_line.gross_amount
 FROM fact_sales_order_line__calculated_measure_gross_amount AS fact_line
 -- Lesson-0106b: dbt ref
 LEFT JOIN {{ ref ("stg_fact_sales_order") }} AS fact_header 
