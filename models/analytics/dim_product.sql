@@ -24,6 +24,20 @@ WITH dim_product__source AS (
   FROM dim_product__rename_column
 )
 
+, dim_product__convert_boolean_to_string AS (
+  SELECT
+    product_key
+    , product_name
+    , brand_name
+    , supplier_key
+    , CASE
+        WHEN is_chiller_stock IS TRUE THEN 'Chiller Product'
+        WHEN is_chiller_stock IS FASLE THEN 'Not Chiller Product'
+        ELSE 'Unknown'
+      END AS is_chiller_stock
+FROM dim_product__cast_type
+)
+
 SELECT
   dim_product.product_key
   , dim_product.product_name
@@ -31,10 +45,9 @@ SELECT
   , dim_product.supplier_key
   , dim_supplier.supplier_name
   , dim_product.is_chiller_stock
-FROM dim_product__cast_type AS dim_product
+FROM dim_product__convert_boolean_to_string AS dim_product
 LEFT JOIN {{ ref ('dim_supplier') }} AS dim_supplier
 ON dim_product.supplier_key = dim_supplier.supplier_key
-
 
 ------------------------------------------------------------
 
