@@ -28,8 +28,8 @@ WITH dim_product__source AS (
   SELECT
     *
     , CASE
-        WHEN is_chiller_stock_boolean IS TRUE THEN 'Chiller Product'
-        WHEN is_chiller_stock_boolean IS FALSE THEN 'Not Chiller Product'
+        WHEN is_chiller_stock_boolean IS TRUE THEN 'Chiller Stock'
+        WHEN is_chiller_stock_boolean IS FALSE THEN 'Not Chiller Stock'
         WHEN is_chiller_stock_boolean IS NULL THEN 'Unknown'
         ELSE 'Invalid' END
       AS is_chiller_stock
