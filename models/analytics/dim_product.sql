@@ -33,7 +33,8 @@ WITH dim_product__source AS (
     , CASE
         WHEN is_chiller_stock IS TRUE THEN 'Chiller Product'
         WHEN is_chiller_stock IS FASLE THEN 'Not Chiller Product'
-        ELSE 'Unknown'
+        WHEN is_chiller_stock IS NULL THEN 'Unknown'
+        ELSE 'Invalid'
       END AS is_chiller_stock
 FROM dim_product__cast_type
 )
