@@ -7,6 +7,7 @@ WITH dim_customer__source AS (
   SELECT
     customer_id AS customer_key
     , customer_name AS customer_name
+    , is_on_credit_hold AS is_on_credit_hold_boolean
     -- Lesson-0107c: Flatten dim_customer
     , customer_category_id AS customer_category_key
     , buying_group_id AS buying_group_key
@@ -17,19 +18,33 @@ WITH dim_customer__source AS (
   SELECT
     CAST ( customer_key AS INTEGER) AS customer_key
     , CAST ( customer_name AS STRING) AS customer_name
+    , CAST ( is_on_credit_hold_boolean AS BOOLEAN) AS is_on_credit_hold_boolean
     , CAST ( customer_category_key AS INTEGER ) AS customer_category_key
     , CAST ( buying_group_key AS INTEGER ) AS buying_group_key
   FROM dim_customer__rename_column
 )
 
+, dim_customer__convert_boolean_to_string AS (
+  SELECT
+    *
+    , CASE
+        WHEN is_on_credit_hold_boolean IS TRUE THEN 'On Hold'
+        WHEN is_on_credit_hold_boolean IS FALSE THEN 'Not On Hold'
+        WHEN is_on_credit_hold_boolean IS NULL THEN 'Undefined'
+        ElSE 'Invalid' END
+      AS is_on_credit_hold
+  FROM dim_customer__cast_type
+)
+
 SELECT
   dim_customer.customer_key
   , dim_customer.customer_name
+  , dim_customer.is_on_credit_hold
   , dim_customer.customer_category_key
   , dim_customer_category.customer_category_name
   , dim_customer.buying_group_key
   , dim_buying_group.buying_group_name
-FROM dim_customer__cast_type AS dim_customer
+FROM dim_customer__convert_boolean_to_string AS dim_customer
 LEFT JOIN {{ ref ('stg_dim_customer_category') }} AS dim_customer_category  -- Flatten dim_customer_category to dim_customer
 ON dim_customer.customer_category_key = dim_customer_category.customer_category_key
 LEFT JOIN {{ ref ('stg_dim_buying_group') }} AS dim_buying_group  -- Flatten dim_buying_group to dim_customer
