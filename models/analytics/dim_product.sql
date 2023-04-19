@@ -30,16 +30,24 @@ WITH dim_product__source AS (
     , CASE
         WHEN is_chiller_stock_boolean IS TRUE THEN 'Chiller Stock'
         WHEN is_chiller_stock_boolean IS FALSE THEN 'Not Chiller Stock'
-        WHEN is_chiller_stock_boolean IS NULL THEN 'Unknown'
+        WHEN is_chiller_stock_boolean IS NULL THEN 'Undefined'
         ELSE 'Invalid' END
       AS is_chiller_stock
   FROM dim_product__cast_type
 )
 
-SELECT
+-- Lesson0109: Handle null value in Dim table
+-- , dim_product__convert_null_handling AS (
+--   SELECT
+--     *
+--     , COALESCE ( brand_name, 'Undefined') AS brand_name
+--   FROM dim_product__convert_boolean_to_string
+-- )
+
+SELECT 
   dim_product.product_key
   , dim_product.product_name
-  , dim_product.brand_name
+  , COALESCE ( dim_product.brand_name, 'Undefined') AS brand_name
   , dim_product.is_chiller_stock
   , dim_product.supplier_key
   , dim_supplier.supplier_name
