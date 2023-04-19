@@ -35,10 +35,10 @@ SELECT
   fact_line.sales_order_line_key
   , fact_line.product_key
   , fact_line.sales_order_key
-  , fact_header.customer_key -- Processed in stg model: stg_fact_sales_order
    -- Get from fact model: stg_fact_sales_order
-   -- Handiling null for LEFT JOIN
-  , COALESCE ( fact_header.picked_by_person_key, -1 ) AS picked_by_person_key
+  , fact_header.customer_key
+  , COALESCE ( fact_header.picked_by_person_key, -1 ) AS picked_by_person_key -- Handiling null for LEFT JOIN
+  , fact_header.order_date -- Lesson-0111a
   , fact_line.quantity
   , fact_line.unit_price
   , fact_line.gross_amount
