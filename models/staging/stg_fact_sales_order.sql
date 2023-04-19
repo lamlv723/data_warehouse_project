@@ -23,5 +23,5 @@ WITH sales_order__source AS (
 SELECT
   sales_order_key
   , customer_key
-  , picked_by_person_key
+  , COALESCE ( picked_by_person_key, 0 ) AS picked_by_person_key
 FROM sales_order__cast_type
