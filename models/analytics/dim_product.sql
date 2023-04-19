@@ -47,10 +47,10 @@ WITH dim_product__source AS (
 SELECT 
   dim_product.product_key
   , dim_product.product_name
-  , COALESCE ( dim_product.brand_name, 'Undefined') AS brand_name
+  , COALESCE ( dim_product.brand_name, 'Undefined' ) AS brand_name
   , dim_product.is_chiller_stock
   , dim_product.supplier_key
-  , dim_supplier.supplier_name
+  , COALESCE ( dim_supplier.supplier_name, 'Invalid' ) AS supplier_name
 FROM dim_product__convert_boolean_to_string AS dim_product
 LEFT JOIN {{ ref ('dim_supplier') }} AS dim_supplier
 ON dim_product.supplier_key = dim_supplier.supplier_key
