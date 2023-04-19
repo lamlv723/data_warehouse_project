@@ -23,11 +23,16 @@ WITH dim_person__source AS (
     , full_name
   FROM dim_person__cast_type
 
+  -- Lesson-0110: Handling null 
   UNION ALL
-  
   SELECT
     0 AS person_key
     , 'Undefined' AS full_name
+
+  UNION ALL
+  SELECT
+    -1 AS person_key
+    , 'Invalid' AS full_name
 )
 
 SELECT

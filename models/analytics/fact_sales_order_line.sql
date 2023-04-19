@@ -36,7 +36,9 @@ SELECT
   , fact_line.product_key
   , fact_line.sales_order_key
   , fact_header.customer_key -- Processed in stg model: stg_fact_sales_order
-  , fact_header.picked_by_person_key -- Get from fact model: stg_fact_sales_order
+   -- Get from fact model: stg_fact_sales_order
+   -- Handiling null for LEFT JOIN
+  , COALESCE ( fact_header.picked_by_person_key, -1 ) AS picked_by_person_key
   , fact_line.quantity
   , fact_line.unit_price
   , fact_line.gross_amount
