@@ -35,16 +35,14 @@ SELECT
   fact_line.sales_order_line_key
   , fact_line.product_key
   , fact_line.sales_order_key
-   -- Get from fact model: stg_fact_sales_order
-  , fact_header.customer_key
-  , COALESCE ( fact_header.picked_by_person_key, -1 ) AS picked_by_person_key -- Handiling null for LEFT JOIN
+  , COALESCE ( fact_header.customer_key, -1 ) AS customer_key -- Handiling null due to LEFT JOIN. Lesson 0110d
+  , COALESCE ( fact_header.picked_by_person_key, -1 ) AS picked_by_person_key -- Handiling null due to LEFT JOIN
   , fact_header.order_date -- Lesson-0111a
   , fact_line.quantity
   , fact_line.unit_price
   , fact_line.gross_amount
 FROM fact_sales_order_line__calculated_measure_gross_amount AS fact_line
--- Lesson-0106b: dbt ref
-LEFT JOIN {{ ref ('stg_fact_sales_order') }} AS fact_header 
+LEFT JOIN {{ ref ('stg_fact_sales_order') }} AS fact_header -- Lesson-0106b: dbt ref
 ON fact_line.sales_order_key = fact_header.sales_order_key
 
 ------------------------------------------------------------
