@@ -12,8 +12,8 @@ WITH dim_customer_category__source AS (
 
 , dim_customer_category__cast_type AS (
   SELECT
-    CAST ( customer_category_key AS INTEGER )AS customer_category_key
-    , CAST ( customer_category_name AS STRING )AS customer_category_name
+    CAST ( customer_category_key AS INTEGER ) AS customer_category_key
+    , CAST ( customer_category_name AS STRING ) AS customer_category_name
   FROM dim_customer_category__rename_column
 )
 

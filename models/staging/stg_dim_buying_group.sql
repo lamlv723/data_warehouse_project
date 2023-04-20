@@ -12,8 +12,8 @@ WITH dim_buying_group__source AS (
 
 , dim_buying_group__cast_type AS (
   SELECT
-    CAST ( buying_group_key AS INTEGER )AS buying_group_key
-    , CAST ( buying_group_name AS STRING )AS buying_group_name
+    CAST ( buying_group_key AS INTEGER ) AS buying_group_key
+    , CAST ( buying_group_name AS STRING ) AS buying_group_name
   FROM dim_buying_group__rename_column
 )
 
@@ -33,6 +33,7 @@ WITH dim_buying_group__source AS (
   -1 AS buying_group_key
   , 'Invalid' AS buying_group_name
 )
+
 SELECT
   buying_group_key
   , buying_group_name

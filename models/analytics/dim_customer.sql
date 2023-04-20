@@ -16,9 +16,9 @@ WITH dim_customer__source AS (
 
 , dim_customer__cast_type AS (
   SELECT
-    CAST ( customer_key AS INTEGER) AS customer_key
-    , CAST ( customer_name AS STRING) AS customer_name
-    , CAST ( is_on_credit_hold_boolean AS BOOLEAN) AS is_on_credit_hold_boolean
+    CAST ( customer_key AS INTEGER ) AS customer_key
+    , CAST ( customer_name AS STRING ) AS customer_name
+    , CAST ( is_on_credit_hold_boolean AS BOOLEAN ) AS is_on_credit_hold_boolean
     , CAST ( customer_category_key AS INTEGER ) AS customer_category_key
     , CAST ( buying_group_key AS INTEGER ) AS buying_group_key
   FROM dim_customer__rename_column
