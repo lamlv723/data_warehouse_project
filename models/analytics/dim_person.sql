@@ -17,7 +17,7 @@ WITH dim_person__source AS (
   FROM dim_person__rename_column
 )
 
-, dim_person__add_undefined AS (
+, dim_person__add_undefined_record AS (
   SELECT
     person_key
     , full_name
@@ -38,4 +38,4 @@ WITH dim_person__source AS (
 SELECT
   person_key
   , full_name
-FROM dim_person__add_undefined
+FROM dim_person__add_undefined_record
