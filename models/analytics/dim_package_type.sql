@@ -34,8 +34,15 @@ WITH dim_package_type__source AS (
   --   , 'Invalid' AS package_type_name
 )
 
+, dim_package_type_handle_null AS (
+  SELECT
+    package_type_key
+    , COALESCE ( package_type_name, 'Undefined' ) AS package_type_name
+  FROM dim_package_type_add_undefined_record
+)
+
 SELECT
   package_type_key
   , package_type_name
-FROM dim_package_type_add_undefined_record
+FROM dim_package_type_handle_null
 ORDER BY package_type_key
