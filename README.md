@@ -1,4 +1,4 @@
-# Lam Data Warehouse Project
+# Lam's Data Warehouse Project
 
 Hello! I'm Lam, and this is my project to show my data warehouse skills.
 
