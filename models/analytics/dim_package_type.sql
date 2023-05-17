@@ -28,6 +28,7 @@ WITH dim_package_type__source AS (
     0 AS package_type_key
     , 'Undefined' AS package_type_name
 
+  -- As this table does NOT used to flatten. So, no need to add 'Invalid'
   -- UNION ALL
   -- SELECT
   --   -1 AS package_type_key
