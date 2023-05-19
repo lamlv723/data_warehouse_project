@@ -69,15 +69,15 @@ WITH dim_person__source AS (
     , 'Invalid' AS is_salesperson
 )
 
-, dim_person__handle_null AS (
-  SELECT
-    person_key
-    , COALESCE ( full_name, 'Undefined' ) AS full_name
-    , COALESCE ( preferred_name, 'Undefined' ) AS preferred_name
-    , is_employee -- Already handled
-    , is_salesperson -- Already handled
-  FROM dim_person__add_undefined_record
-)
+-- , dim_person__handle_null AS (
+--   SELECT
+--     person_key
+--     , COALESCE ( full_name, 'Undefined' ) AS full_name
+--     , COALESCE ( preferred_name, 'Undefined' ) AS preferred_name
+--     , is_employee -- Already handled
+--     , is_salesperson -- Already handled
+--   FROM dim_person__add_undefined_record
+-- )
 
 SELECT
   person_key
@@ -85,5 +85,5 @@ SELECT
   , preferred_name
   , is_employee
   , is_salesperson
-FROM dim_person__handle_null
+FROM dim_person__add_undefined_record
 ORDER BY person_key
