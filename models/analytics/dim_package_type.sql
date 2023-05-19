@@ -17,7 +17,7 @@ WITH dim_package_type__source AS (
   FROM dim_package_type__rename_column
 )
 
-, dim_package_type_add_undefined_record AS (
+, dim_package_type__add_undefined_record AS (
   SELECT
     package_type_key
     , package_type_name
@@ -45,5 +45,5 @@ WITH dim_package_type__source AS (
 SELECT
   package_type_key
   , package_type_name
-FROM dim_package_type_add_undefined_record
+FROM dim_package_type__add_undefined_record
 ORDER BY package_type_key
