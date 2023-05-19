@@ -19,11 +19,31 @@ WITH dim_supplier__source AS (
   FROM dim_supplier__rename_column
 )
 
+, dim_supplier__add_undefined_record AS (
+  SELECT
+    supplier_key
+    , supplier_name
+    , supplier_category_key
+  FROM dim_supplier__cast_type
+
+  UNION ALL
+  SELECT
+    -1
+    , 'Invalid'
+    , -1
+
+  UNION ALL
+  SELECT
+    0
+    , 'Undefined'
+    , 0
+)
+
 SELECT
   dim_supplier.supplier_key
   , dim_supplier.supplier_name
   , dim_supplier.supplier_category_key
   , COALESCE ( dim_supplier_category.supplier_category_name, 'Invalid' ) AS supplier_category_name
-FROM dim_supplier__cast_type AS dim_supplier
+FROM dim_supplier__add_undefined_record AS dim_supplier
 LEFT JOIN {{ ref ('stg_dim_supplier_category') }} AS dim_supplier_category
 ON dim_supplier.supplier_category_key = dim_supplier_category.supplier_category_key

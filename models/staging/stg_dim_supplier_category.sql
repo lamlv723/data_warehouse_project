@@ -17,7 +17,24 @@ WITH dim_supplier_category__source AS (
   FROM dim_supplier_category__rename_column
 )
 
+, dim_supplier_category__add_undefined_record AS (
+  SELECT
+    supplier_category_key
+    , supplier_category_name
+  FROM dim_supplier_category__cast_type
+
+  UNION ALL
+  SELECT
+    -1
+    , 'Invalid'
+
+  UNION ALL
+  SELECT
+    0
+    , 'Undefined'
+)
+
 SELECT
   supplier_category_key
   , supplier_category_name
-FROM dim_supplier_category__cast_type
+FROM dim_supplier_category__add_undefined_record
