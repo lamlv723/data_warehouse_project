@@ -25,6 +25,35 @@ WITH dim_country__source AS (
   FROM dim_country__rename_column
 )
 
+, dim_country__add_undefined_record AS (
+  SELECT
+    country_key
+    , country_name
+    , country_type
+    , continent
+    , region
+    , subregion
+  FROM dim_country__cast_type
+
+  UNION ALL
+  SELECT
+  0 AS country_key
+  , 'Undefined' AS country_name
+  , 'Undefined' AS country_type
+  , 'Undefined' AS continent
+  , 'Undefined' AS region
+  , 'Undefined' AS subregion
+
+  UNION ALL
+  SELECT
+  -1 AS country_key
+  , 'Invalid' AS country_name
+  , 'Invalid' AS country_type
+  , 'Invalid' AS continent
+  , 'Invalid' AS region
+  , 'Invalid' AS subregion
+)
+
 SELECT
   country_key
   , country_name
@@ -32,4 +61,4 @@ SELECT
   , continent
   , region
   , subregion
-FROM dim_country__cast_type
+FROM dim_country__add_undefined_record

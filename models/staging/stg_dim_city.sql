@@ -19,6 +19,26 @@ WITH dim_city__source AS (
   FROM dim_city__rename_column
 )
 
+, dim_city__add_undefined_record AS (
+  SELECT
+    city_key
+    , city_name
+    , state_province_key
+  FROM dim_city__cast_type
+
+  UNION ALL
+  SELECT
+  0 AS city_key
+  , 'Undefined' AS city_name
+  , 0 AS state_province_key
+
+  UNION ALL
+  SELECT
+  -1 AS city_key
+  , 'Invalid' AS city_name
+  , -1 AS state_province_key
+)
+
 SELECT
   dim_city.city_key
   , dim_city.city_name
@@ -28,6 +48,6 @@ SELECT
   , COALESCE ( dim_state_province.continent, 'Invalid' ) AS continent
   , COALESCE ( dim_state_province.region, 'Invalid' ) AS region
   , COALESCE ( dim_state_province.subregion, 'Invalid' ) AS subregion
-FROM dim_city__cast_type AS dim_city
+FROM dim_city__add_undefined_record AS dim_city
 LEFT JOIN {{ ref('stg_dim_state_province') }} AS dim_state_province
 ON dim_city.state_province_key = dim_state_province.state_province_key
