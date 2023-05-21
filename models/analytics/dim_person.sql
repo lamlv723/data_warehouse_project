@@ -51,7 +51,6 @@ WITH dim_person__source AS (
     , is_salesperson
   FROM dim_person__change_boolean_cols_to_string
 
-  -- Lesson-0110: Handling null 
   UNION ALL
   SELECT
     0 AS person_key

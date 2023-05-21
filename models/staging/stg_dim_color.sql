@@ -23,15 +23,15 @@ WITH dim_color__source AS (
     , color_name
   FROM dim_color__cast_type
 
-  -- UNION ALL
-  -- SELECT
-  --   -1
-  --   , 'Invalid'
+  UNION ALL
+  SELECT
+    -1 AS color_key
+    , 'Invalid' AS color_name
 
   UNION ALL
   SELECT
-    0
-    , 'Undefined'
+    0 AS color_key
+    , 'Undefined' AS color_name
 )
 
 SELECT

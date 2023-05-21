@@ -57,6 +57,43 @@ WITH dim_product__source AS (
   FROM dim_product__convert_boolean_to_string
 )
 
+, dim_product__add_undefined_record AS (
+  SELECT 
+    product_key
+    , product_name
+    , brand_name
+    , product_size
+    , is_chiller_stock
+    , supplier_key
+    , color_key
+    , unit_package_type_key
+    , outer_package_type_key
+  FROM dim_product__handle_null
+
+  UNION ALL
+  SELECT
+    -1 AS product_key
+    , 'Invalid' AS product_name
+    , 'Invalid' AS brand_name
+    , 'Invalid' AS product_size
+    , 'Invalid' AS is_chiller_stock
+    , -1 AS supplier_key
+    , -1 AS color_key
+    , -1 AS unit_package_type_key
+    , -1 AS outer_package_type_key
+  UNION ALL
+  SELECT
+    0 AS product_key
+    , 'Undefined' AS product_name
+    , 'Undefined' AS brand_name
+    , 'Undefined' AS product_size
+    , 'Undefined' AS is_chiller_stock
+    , 0 AS supplier_key
+    , 0 AS color_key
+    , 0 AS unit_package_type_key
+    , 0 AS outer_package_type_key
+)
+
 SELECT 
   dim_product.product_key
   , dim_product.product_name
@@ -71,7 +108,7 @@ SELECT
   , COALESCE ( dim_package_type_unit.package_type_name, 'Invalid' ) AS unit_package_type_name
   , outer_package_type_key
   , COALESCE ( dim_package_type_outer.package_type_name, 'Invalid' ) AS outer_package_type_name
-FROM dim_product__handle_null AS dim_product
+FROM dim_product__add_undefined_record AS dim_product
 LEFT JOIN {{ ref ('dim_supplier') }} AS dim_supplier
 ON dim_product.supplier_key = dim_supplier.supplier_key
 LEFT JOIN {{ ref ('dim_supplier') }} AS dim_supplier_category
