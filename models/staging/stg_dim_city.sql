@@ -44,6 +44,7 @@ SELECT
   , dim_city.city_name
   , dim_city.state_province_key
   , COALESCE ( dim_state_province.state_province_name, 'Invalid' ) AS state_province_name
+  , COALESCE ( dim_state_province.country_name, 'Invalid' ) AS country_name
   , COALESCE ( dim_state_province.country_type, 'Invalid' ) AS country_type
   , COALESCE ( dim_state_province.continent, 'Invalid' ) AS continent
   , COALESCE ( dim_state_province.region, 'Invalid' ) AS region

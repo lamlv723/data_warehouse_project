@@ -100,6 +100,8 @@ SELECT
   , COALESCE ( dim_buying_group.buying_group_name, 'Invalid' ) AS buying_group_name
   , dim_customer.delivery_city_key
   , COALESCE ( dim_city.city_name, 'Invalid' ) AS delivery_city_name
+  , COALESCE ( dim_city.state_province_name, 'Invalid' ) AS delivery_state_province_name
+  , COALESCE ( dim_city.country_name, 'Invalid' ) AS delivery_country_name
 FROM dim_customer__add_undefined_record AS dim_customer
 LEFT JOIN {{ ref ('stg_dim_customer_category') }} AS dim_customer_category  -- Flatten dim_customer_category to dim_customer
 ON dim_customer.customer_category_key = dim_customer_category.customer_category_key
