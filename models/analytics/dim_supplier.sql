@@ -45,5 +45,6 @@ SELECT
   , dim_supplier.supplier_category_key
   , COALESCE ( dim_supplier_category.supplier_category_name, 'Invalid' ) AS supplier_category_name
 FROM dim_supplier__add_undefined_record AS dim_supplier
+
 LEFT JOIN {{ ref ('stg_dim_supplier_category') }} AS dim_supplier_category
 ON dim_supplier.supplier_category_key = dim_supplier_category.supplier_category_key
