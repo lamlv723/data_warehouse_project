@@ -7,6 +7,9 @@ WITH dim_customer__source AS (
   SELECT
     customer_id AS customer_key
     , customer_name AS customer_name
+    , credit_limit AS credit_limit
+    , standard_discount_percentage AS standard_discount_percentage
+    , payment_days AS payment_days
     , is_statement_sent AS is_statement_sent_boolean
     , is_on_credit_hold AS is_on_credit_hold_boolean
     , customer_category_id AS customer_category_key
@@ -22,6 +25,9 @@ WITH dim_customer__source AS (
   SELECT
     CAST ( customer_key AS INTEGER ) AS customer_key
     , CAST ( customer_name AS STRING ) AS customer_name
+    , CAST ( credit_limit AS NUMERIC ) AS credit_limit
+    , CAST ( standard_discount_percentage AS NUMERIC ) AS standard_discount_percentage
+    , CAST ( payment_days AS INTEGER ) AS payment_days
     , CAST ( is_statement_sent_boolean AS BOOLEAN ) AS is_statement_sent_boolean
     , CAST ( is_on_credit_hold_boolean AS BOOLEAN ) AS is_on_credit_hold_boolean
     , CAST ( customer_category_key AS INTEGER ) AS customer_category_key
@@ -55,6 +61,9 @@ WITH dim_customer__source AS (
   SELECT
     customer_key
     , customer_name
+    , COALESCE ( credit_limit, 0 ) AS credit_limit
+    , standard_discount_percentage
+    , payment_days
     , is_statement_sent
     , is_on_credit_hold
     , customer_category_key
@@ -70,6 +79,9 @@ WITH dim_customer__source AS (
   SELECT
   customer_key
   , customer_name
+  , credit_limit
+  , standard_discount_percentage
+  , payment_days
   , is_statement_sent
   , is_on_credit_hold
   , customer_category_key
@@ -84,6 +96,9 @@ WITH dim_customer__source AS (
   SELECT
   0 AS customer_key
   , 'Undefined' AS customer_name
+  , 0 AS credit_limit
+  , 0 AS standard_discount_percentage
+  , 0 AS payment_days
   , 'Undefined' AS is_statement_sent
   , 'Undefined' AS is_on_credit_hold
   , 0 AS customer_category_key
@@ -97,6 +112,9 @@ WITH dim_customer__source AS (
   SELECT
   -1 AS customer_key
   , 'Invalid' AS customer_name
+  , -1 AS credit_limit
+  , -1 AS standard_discount_percentage
+  , -1 AS payment_days
   , 'Invalid' AS is_statement_sent
   , 'Invalid' AS is_on_credit_hold
   , -1 AS customer_category_key
@@ -110,6 +128,9 @@ WITH dim_customer__source AS (
 SELECT
   dim_customer.customer_key
   , dim_customer.customer_name
+  , dim_customer.credit_limit
+  , dim_customer.standard_discount_percentage
+  , dim_customer.payment_days
   , dim_customer.is_statement_sent
   , dim_customer.is_on_credit_hold
   , dim_customer.customer_category_key
