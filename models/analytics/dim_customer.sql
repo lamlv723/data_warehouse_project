@@ -165,4 +165,4 @@ LEFT JOIN {{ ref ('dim_person') }} AS dim_person_alternate -- Flatten alternate 
 ON dim_customer.alternate_contact_person_key = dim_person_alternate.person_key
 
 LEFT JOIN dim_customer__add_undefined_record AS dim_bill_to_customer -- Flatten bill to customer
-ON dim_customer.bill_to_customer_key = dim_bill_to_customer.bill_to_customer_key
+ON dim_customer.bill_to_customer_key = dim_bill_to_customer.customer_key
