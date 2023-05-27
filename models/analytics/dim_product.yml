@@ -1,0 +1,56 @@
+version: 2
+
+models:
+  - name: dim_product
+    columns:
+      - name: product_key
+        tests:
+          - not_null
+          
+      - name: product_name
+        tests:
+          - not_null
+
+      - name: brand_name
+        tests:
+          - not_null
+
+      - name: is_chiller_stock
+        tests:
+          - not_null
+
+      - name: supplier_key
+        tests:
+          - not_null
+
+      - name: supplier_name
+        tests:
+          - not_null
+
+      - name: supplier_category_name
+        tests:
+          - not_null
+
+      - name: color_key
+        tests:
+          - not_null
+
+      - name: color_name
+        tests:
+          - not_null
+
+      - name: unit_package_type_key
+        tests:
+          - not_null
+
+      - name: unit_package_type_name
+        tests:
+          - not_null
+
+      - name: outer_package_type_key
+        tests:
+          - not_null
+
+      - name: outer_package_type_name
+        tests:
+          - not_null
