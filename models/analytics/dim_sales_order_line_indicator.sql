@@ -10,7 +10,12 @@ WITH dim_is_undersupply_backordered AS (
     , "Not Undersupply Backordered" AS is_undersupply_backordered
 )
 
-SELECT *
+SELECT
+  CONCAT ( dim_is_undersupply_backordered.is_undersupply_backordered_boolean, ',', dim_package_type.package_type_key ) AS sales_order_line_indicator_key
+  , dim_is_undersupply_backordered.is_undersupply_backordered_boolean
+  , dim_is_undersupply_backordered.is_undersupply_backordered
+  , dim_package_type.package_type_key
+  , dim_package_type.package_type_name
 FROM dim_is_undersupply_backordered
 CROSS JOIN {{ ref ('dim_package_type') }} AS dim_package_type
-ORDER BY 1, 3
+ORDER BY 2, 4
