@@ -1,0 +1,36 @@
+version: 2
+
+models:
+  - name: dim_person
+    columns:
+      - name: person_key
+        tests:
+          - not_null
+          - unique
+          
+    columns:
+      - name: full_name
+        tests:
+          - not_null
+
+    columns:
+      - name: preferred_name
+        tests:
+          - not_null
+
+    columns:
+      - name: is_employee
+        tests:
+          - accepted_values:
+              values: ['Employee', 'Not an employee']
+              config:
+                where: 'person_key NOT IN ( -1, 0 )'
+
+    columns:
+      - name: is_salesperson
+        tests:
+          - accepted_values:
+              values: ['Salesperson', 'Not a salesperson']
+              config:
+                where: 'person_key NOT IN ( -1, 0 )'
+        
