@@ -1,0 +1,85 @@
+version: 2
+
+models:
+  - name: fact_sales_order_line
+    columns:
+      - name: sales_order_line_key
+        tests:
+          - not_null
+          - unique
+          
+      - name: sales_order_key
+        tests:
+          - not_null
+          
+      - name: product_key
+        tests:
+          - not_null
+          
+      - name: sales_order_line_indicator_key
+        tests:
+          - not_null
+          
+      - name: customer_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref ('dim_customer')
+              field: customer_key
+          
+      - name: salesperson_person_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref ('dim_person')
+              field: person_key
+          
+      - name: picked_by_person_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref ('dim_person')
+              field: person_key
+          
+      - name: contact_person_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref ('dim_person')
+              field: person_key
+          
+      - name: order_date
+        tests:
+          - not_null
+          
+      - name: expected_delivery_date
+        tests:
+          - not_null
+          
+      - name: quantity
+        tests:
+          - not_null
+          
+      - name: unit_price
+        tests:
+          - not_null
+          
+      - name: tax_rate
+        tests:
+          - not_null
+          
+      - name: picked_quantity
+        tests:
+          - not_null
+          
+      - name: gross_amount
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: '= quantity * unit_price'
+          
+      - name: tax_amount
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: '= ( quantity * unit_price ) * ( tax_rate / 100 )'
