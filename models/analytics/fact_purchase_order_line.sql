@@ -1,4 +1,3 @@
--- Lesson-0105: Create data layer
 WITH fact_purchase_order_line__source AS (
   SELECT *
   FROM `vit-lam-data.wide_world_importers.purchasing__purchase_order_lines`

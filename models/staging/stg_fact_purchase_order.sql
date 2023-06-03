@@ -1,4 +1,3 @@
--- Lesson-0106b: Create staging table
 WITH purchase_order__source AS (
   SELECT *
   FROM `vit-lam-data.wide_world_importers.purchasing__purchase_orders`
