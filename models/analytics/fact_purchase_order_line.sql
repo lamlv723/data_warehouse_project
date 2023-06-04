@@ -45,17 +45,19 @@ SELECT
   , fact_line.description
   , fact_line.ordered_outers
   , fact_line.received_outers
-  , fact_line.is_order_line_finalized
-  , fact_header.is_order_finalized
+  -- , fact_line.is_order_line_finalized
+  -- , fact_header.is_order_finalized
   , fact_line.product_key
   , fact_line.package_type_key
-  -- , FARM_FINGERPRINT (
-  --     CONCAT (
-  --       COALESCE ( fact_header.is_undersupply_backordered, 'Invalid' )
-  --       , ','
-  --       , fact_line.package_type_key
-  --     )
-  --   ) AS sales_order_line_indicator_key
+  , FARM_FINGERPRINT (
+      CONCAT (
+        COALESCE ( fact_header.is_order_finalized, 'Invalid' )
+        , ','
+        , fact_line.is_order_line_finalized
+        , ','
+        , fact_line.package_type_key
+      )
+    ) AS purchase_order_line_indicator_key
   , fact_line.purchase_order_key
   , COALESCE ( fact_header.supplier_key, -1 ) AS supplier_key -- Handle null due to left join
   , COALESCE ( fact_header.delivery_method_key, -1 ) AS delivery_method_key
