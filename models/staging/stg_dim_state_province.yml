@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: stg_dim_state_province
+    columns:
+      - name: state_province_key
+        tests:
+          - not_null
+          - unique
+          
+      - name: state_province_name
+        tests:
+          - not_null
+          
+      - name: country_key
+        tests:
+          - not_null
+          - relationships:
+              to: ref ('stg_dim_country')
+              field: country_key
+
+      - name: country_name
+        tests:
+          - not_null
+          
+      - name: country_type
+        tests:
+          - not_null
+
+      - name: continent
+        tests:
+          - not_null
+
+      - name: region
+        tests:
+          - not_null
+
+      - name: subregion
+        tests:
+          - not_null
