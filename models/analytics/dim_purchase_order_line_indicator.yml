@@ -1,0 +1,43 @@
+version: 2
+
+models:
+  - name: dim_purchase_order_line_indicator
+    columns:
+      - name: purchase_order_line_indicator_key
+        tests:
+          - not_null
+          - unique
+          
+      - name: is_order_finalized_boolean
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ true, false ]
+              quote: false
+              
+      - name: is_order_finalized
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Finalized', 'Not Finalized' ]
+
+      - name: is_order_line_finalized_boolean
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ true, false ]
+              quote: false
+              
+      - name: is_order_line_finalized
+        tests:
+          - not_null
+          - accepted_values:
+              values: [ 'Finalized', 'Not Finalized' ]
+
+      - name: package_type_key
+        tests:
+          - not_null
+
+      - name: package_type_name
+        tests:
+          - not_null
