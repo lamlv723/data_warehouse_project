@@ -57,9 +57,9 @@ SELECT
   --     )
   --   ) AS sales_order_line_indicator_key
   , fact_line.purchase_order_key
-  , fact_header.supplier_key
-  , fact_header.delivery_method_key
-  , fact_header.contact_person_key
+  , COALESCE ( fact_header.supplier_key, -1 ) AS supplier_key -- Handle null due to left join
+  , COALESCE ( fact_header.delivery_method_key, -1 ) AS delivery_method_key
+  , COALESCE ( fact_header.contact_person_key, -1 ) AS contact_person_key
   , fact_header.order_date
   , fact_header.expected_delivery_date
 FROM fact_purchase_order_line__convert_boolean AS fact_line
