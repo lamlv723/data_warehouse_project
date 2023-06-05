@@ -63,6 +63,9 @@ models:
       - name: quantity
         tests:
           - not_null
+          - custom_test_equal_sum:
+              compare_model: '`vit-lam-data.wide_world_importers.sales__order_lines`'
+              compare_column: 'quantity'
           
       - name: unit_price
         tests:
@@ -75,6 +78,9 @@ models:
       - name: picked_quantity
         tests:
           - not_null
+          - custom_test_equal_sum:
+              compare_model: '`vit-lam-data.wide_world_importers.sales__order_lines`'
+              compare_column: 'picked_quantity'
           
       - name: gross_amount
         tests:
