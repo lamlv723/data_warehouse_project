@@ -33,6 +33,9 @@ models:
       - name: purchase_order_line_indicator_key
         tests:
           - not_null
+          - relationships:
+              to: ref ('dim_purchase_order_line_indicator')
+              field: purchase_order_line_indicator_key
           
       - name: purchase_order_key
         tests:

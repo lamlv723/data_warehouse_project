@@ -49,4 +49,4 @@ CROSS JOIN dim_is_order_finalized
 
 CROSS JOIN {{ ref ('dim_package_type') }} AS dim_package_type
 
-CROSS JOIN {{ ref ('stg_dim_delivery_method') }} AS stg_dim_delivery_method
+CROSS JOIN {{ ref ('dim_delivery_method') }} AS stg_dim_delivery_method
