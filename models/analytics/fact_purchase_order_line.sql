@@ -56,6 +56,8 @@ SELECT
         , fact_line.is_order_line_finalized
         , ','
         , fact_line.package_type_key
+        , ','
+        , COALESCE ( fact_header.delivery_method_key, -1 ) AS delivery_method_key
       )
     ) AS purchase_order_line_indicator_key
   , fact_line.purchase_order_key
