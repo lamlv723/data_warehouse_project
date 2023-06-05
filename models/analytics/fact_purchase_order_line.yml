@@ -49,7 +49,7 @@ models:
         tests:
           - not_null
           - relationships:
-              to: ref ('stg_dim_delivery_method')
+              to: ref ('dim_delivery_method')
               field: delivery_method_key
           
       - name: contact_person_key
