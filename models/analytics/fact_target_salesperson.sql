@@ -15,11 +15,18 @@ WITH fact_target_salesperson__target_source AS (
   GROUP BY 1, 2
 )
 
+, fact_target_salesperson__combine AS (
+  SELECT
+    year_month
+    , salesperson_person_key
+    , COALESCE(fact_target.target_gross_amount, 0) AS target_gross_amount
+    , COALESCE(fact_actual.gross_amount, 0) AS gross_amount
+  FROM fact_target_salesperson__target_source AS fact_target
+  FULL OUTER JOIN fact_target_salesperson__actual_source AS fact_actual
+    USING(year_month, salesperson_person_key)
+)
+
 SELECT
-  year_month
-  , salesperson_person_key
-  , COALESCE(fact_target.target_gross_amount, 0) AS target_gross_amount
-  , COALESCE(fact_actual.gross_amount, 0) AS gross_amount
-FROM fact_target_salesperson__target_source AS fact_target
-FULL OUTER JOIN fact_target_salesperson__actual_source AS fact_actual
-  USING(year_month, salesperson_person_key)
+  *
+  , gross_amount / target_gross_amount AS achievement_ratio
+FROM fact_target_salesperson__combine
