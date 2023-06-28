@@ -26,7 +26,18 @@ WITH fact_target_salesperson__target_source AS (
     USING(year_month, salesperson_person_key)
 )
 
+, fact_target_salesperson__add_achievement_ratio AS (
+  SELECT
+    *
+    , gross_amount / target_gross_amount AS achievement_ratio
+  FROM fact_target_salesperson__combine
+)
+
 SELECT
   *
-  , gross_amount / target_gross_amount AS achievement_ratio
-FROM fact_target_salesperson__combine
+  , CASE
+      WHEN achievement_ratio > 0.9 THEN 'Achieved'
+      WHEN achievement_ratio BETWEEN 0 AND 0.9 THEN 'Not Achieved'
+      ELSE 'Undefined'
+    END AS is_achieved
+FROM fact_target_salesperson__add_achievement_ratio
