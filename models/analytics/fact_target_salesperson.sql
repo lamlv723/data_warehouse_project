@@ -41,3 +41,4 @@ SELECT
       ELSE 'Undefined'
     END AS is_achieved
 FROM fact_target_salesperson__add_achievement_ratio
+ORDER BY 1, 2
