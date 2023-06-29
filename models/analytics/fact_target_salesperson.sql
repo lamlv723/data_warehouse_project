@@ -29,16 +29,27 @@ WITH fact_target_salesperson__target_source AS (
 , fact_target_salesperson__add_achievement_ratio AS (
   SELECT
     *
-    , gross_amount / target_gross_amount AS achievement_ratio
+    , gross_amount / NULLIF(target_gross_amount, 0) AS achievement_ratio
   FROM fact_target_salesperson__combine
 )
 
+, fact_target_salesperson__add_achievement_ratio AS (
+  SELECT
+    *
+    , CASE
+        WHEN achievement_ratio BETWEEN 0 AND 0.9 THEN 'Not Achieved'
+        WHEN achievement_ratio > 0.9 THEN 'Achieved'
+        ELSE 'Undefined'
+      END AS is_achieved
+  FROM fact_target_salesperson__add_achievement_ratio
+)
+
 SELECT
-  *
-  , CASE
-      WHEN achievement_ratio > 0.9 THEN 'Achieved'
-      WHEN achievement_ratio BETWEEN 0 AND 0.9 THEN 'Not Achieved'
-      ELSE 'Undefined'
-    END AS is_achieved
+  year_month
+  , salesperson_person_key
+  , target_gross_amount
+  , gross_amount
+  , achievement_ratio
+  , is_achieved
 FROM fact_target_salesperson__add_achievement_ratio
 ORDER BY 1, 2
