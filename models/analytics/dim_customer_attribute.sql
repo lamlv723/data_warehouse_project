@@ -27,4 +27,22 @@ WITH dim_customer_attribute__summarize AS (
   FROM dim_customer_attribute__summarize
 )
 
-SELECT * FROM dim_customer_attribute__calculate_percentile
+, dim_customer_attribute__segment_percentile AS (
+  SELECT
+    *
+    , CASE
+        WHEN lifetime_sales_amount_percentile BETWEEN 0.8 AND 1 THEN 'High'
+        WHEN lifetime_sales_amount_percentile BETWEEN 0.5 AND 0.8 THEN 'Medium'
+        WHEN lifetime_sales_amount_percentile BETWEEN 0 AND 0.5 THEN 'Low'
+        ELSE 'Undefined'
+      END AS lifetime_sales_amount_segment
+    , CASE
+        WHEN L12MTD_sales_amount_percentile BETWEEN 0.8 AND 1 THEN 'High'
+        WHEN L12MTD_sales_amount_percentile BETWEEN 0.5 AND 0.8 THEN 'Medium'
+        WHEN L12MTD_sales_amount_percentile BETWEEN 0 AND 0.5 THEN 'Low'
+        ELSE 'Undefined'
+      END AS L12MTD_sales_amount_segment
+  FROM dim_customer_attribute__calculate_percentile
+)
+
+SELECT * FROM dim_customer_attribute__segment_percentile
