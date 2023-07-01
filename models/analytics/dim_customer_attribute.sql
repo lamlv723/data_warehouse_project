@@ -19,4 +19,12 @@ WITH dim_customer_attribute__summarize AS (
   GROUP BY 1
 )
 
-SELECT * FROM dim_customer_attribute__summarize
+, dim_customer_attribute__calculate_percentile AS (
+  SELECT
+    *
+    , PERCENT_RANK() OVER(ORDER BY(lifetime_sales_amount)) AS lifetime_sales_amount_percentile
+    , PERCENT_RANK() OVER(ORDER BY(L12MTD_sales_amount)) AS L12MTD_sales_amount_percentile
+  FROM dim_customer_attribute__summarize
+)
+
+SELECT * FROM dim_customer_attribute__calculate_percentile
