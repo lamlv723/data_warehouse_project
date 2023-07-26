@@ -11,16 +11,33 @@ WITH fact_customer_snapshot_by_month__summarize AS (
   SELECT DISTINCT customer_key
   FROM fact_customer_snapshot_by_month__summarize
   )
+
 , fact_customer_snapshot_by_month__get_unique_month AS (
   SELECT DISTINCT year_month
   FROM fact_customer_snapshot_by_month__summarize
   )
 
+, fact_customer_snapshot_by_month__filter_start_end_month AS (
+  SELECT
+    fact_customer_snapshot_by_month__get_unique_month.year_month
+    , dim_customer_attribute.customer_key
+    , dim_customer_attribute.start_month
+    , dim_customer_attribute.end_month
+  FROM {{ref('dim_customer_attribute')}} AS dim_customer_attribute
+  CROSS JOIN fact_customer_snapshot_by_month__get_unique_month
+  WHERE 
+    fact_customer_snapshot_by_month__get_unique_month.year_month
+    BETWEEN dim_customer_attribute.start_month AND dim_customer_attribute.end_month
+  ORDER BY 2, 1
+)
+
 , fact_customer_snapshot_by_month__dense_customer_month AS (
   SELECT
-    *
-  FROM fact_customer_snapshot_by_month__get_unique_month 
-  CROSS JOIN fact_customer_snapshot_by_month__get_unique_customer
+    fact_customer_snapshot_by_month__filter_start_end_month.year_month
+    , fact_customer_snapshot_by_month__get_unique_customer.customer_key
+  FROM fact_customer_snapshot_by_month__filter_start_end_month
+  LEFT JOIN fact_customer_snapshot_by_month__get_unique_customer
+  USING (customer_key)
   ORDER BY 2, 1
 )
 
