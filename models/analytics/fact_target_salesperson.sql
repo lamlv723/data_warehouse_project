@@ -33,7 +33,7 @@ WITH fact_target_salesperson__target_source AS (
   FROM fact_target_salesperson__combine
 )
 
-, fact_target_salesperson__add_achievement_ratio AS (
+, fact_target_salesperson__change_boolean_to_string AS (
   SELECT
     *
     , CASE
@@ -51,5 +51,5 @@ SELECT
   , gross_amount
   , achievement_ratio
   , is_achieved
-FROM fact_target_salesperson__add_achievement_ratio
+FROM fact_target_salesperson__change_boolean_to_string
 ORDER BY 1, 2
