@@ -15,6 +15,8 @@ WITH dim_customer_attribute__summarize AS (
           END
         )
       ) AS L12MTD_sales_order
+    , DATE_TRUNC(MIN(order_date), MONTH) AS start_month
+    , DATE_TRUNC(MAX(order_date), MONTH) AS end_month
   FROM {{ref('fact_sales_order_line')}}
   GROUP BY 1
 )
@@ -55,4 +57,6 @@ SELECT
   , L12MTD_sales_amount_percentile
   , lifetime_sales_amount_segment
   , L12MTD_sales_amount_segment
+  , start_month
+  , end_month
 FROM dim_customer_attribute__segment_percentile
