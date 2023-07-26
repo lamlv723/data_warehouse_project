@@ -7,11 +7,39 @@ WITH fact_customer_snapshot_by_month__summarize AS (
   GROUP BY 1, 2
 )
 
+, fact_customer_snapshot_by_month__get_unique_customer AS (
+  SELECT DISTINCT customer_key
+  FROM fact_customer_snapshot_by_month__summarize
+  )
+, fact_customer_snapshot_by_month__get_unique_month AS (
+  SELECT DISTINCT year_month
+  FROM fact_customer_snapshot_by_month__summarize
+  )
+
+, fact_customer_snapshot_by_month__dense_customer_month AS (
+  SELECT
+    *
+  FROM fact_customer_snapshot_by_month__get_unique_month 
+  CROSS JOIN fact_customer_snapshot_by_month__get_unique_customer
+  ORDER BY 2, 1
+)
+
+, fact_customer_snapshot_by_month__dense AS (
+  SELECT
+    year_month
+    , customer_key
+    , COALESCE(fact_customer_snapshot_by_month__summarize.sales_amount, 0) AS sales_amount
+  FROM fact_customer_snapshot_by_month__dense_customer_month
+  LEFT JOIN fact_customer_snapshot_by_month__summarize
+  USING (year_month, customer_key)
+  ORDER BY 2, 1
+)
+
 , fact_customer_snapshot_by_month__calculate_cumulative AS (
   SELECT
     *
     , SUM(sales_amount) OVER(PARTITION BY customer_key ORDER BY year_month) AS lifetime_sales_amount
-  FROM fact_customer_snapshot_by_month__summarize
+  FROM fact_customer_snapshot_by_month__dense
 )
 
 , fact_customer_snapshot_by_month__calculate_percentile AS (
@@ -30,13 +58,13 @@ WITH fact_customer_snapshot_by_month__summarize AS (
         WHEN sales_amount_percentile BETWEEN 0.5 AND 0.8 THEN 'Medium'
         WHEN sales_amount_percentile BETWEEN 0 AND 0.5 THEN 'Low'
         ELSE 'Invalid'
-      END AS sales_amount_segment
+      END AS sales_amount_monetary
     , CASE
         WHEN lifetime_sales_amount_percentile BETWEEN 0.8 AND 1 THEN 'High'
         WHEN lifetime_sales_amount_percentile BETWEEN 0.5 AND 0.8 THEN 'Medium'
         WHEN lifetime_sales_amount_percentile BETWEEN 0 AND 0.5 THEN 'Low'
         ELSE 'Invalid'
-      END AS lifetime_sales_amount_segment
+      END AS lifetime_sales_amount_monetary
   FROM fact_customer_snapshot_by_month__calculate_percentile
 )
 
@@ -47,6 +75,7 @@ SELECT
   , lifetime_sales_amount
   -- , sales_amount_percentile
   -- , lifetime_sales_amount_percentile
-  , sales_amount_segment
-  , lifetime_sales_amount_segment
+  , sales_amount_monetary
+  , lifetime_sales_amount_monetary
 FROM fact_customer_snapshot_by_month__percentile_segment
+ORDER BY 2, 1
