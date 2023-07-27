@@ -108,7 +108,10 @@ SELECT
   , COALESCE ( dim_package_type_unit.package_type_name, 'Invalid' ) AS unit_package_type_name
   , outer_package_type_key
   , COALESCE ( dim_package_type_outer.package_type_name, 'Invalid' ) AS outer_package_type_name
-  , COALESCE ( stg_dim_product__external.category_key, -1 ) AS category_key
+  , COALESCE ( dim_product__external.category_key, -1 ) AS category_key
+  , COALESCE ( dim_category.category_name, 'Invalid' ) AS category_name
+  , COALESCE ( dim_category.category_level, -1 ) AS category_level
+  , COALESCE ( dim_category.parent_category_key, -1 ) AS parent_category_key
 FROM dim_product__add_undefined_record AS dim_product
 
 LEFT JOIN {{ ref ('dim_supplier') }} AS dim_supplier
@@ -126,5 +129,8 @@ ON dim_product.unit_package_type_key = dim_package_type_unit.package_type_key
 LEFT JOIN {{ ref ('dim_package_type') }} AS dim_package_type_outer
 ON dim_product.outer_package_type_key = dim_package_type_outer.package_type_key
 
-LEFT JOIN {{ ref ('stg_dim_product__external') }} AS stg_dim_product__external
-ON dim_product.product_key = stg_dim_product__external.product_key
+LEFT JOIN {{ ref ('stg_dim_product__external') }} AS dim_product__external
+ON dim_product.product_key = dim_product__external.product_key
+
+LEFT JOIN {{ ref ('dim_category') }} AS dim_category
+ON dim_product__external.category_key = dim_category.category_key
