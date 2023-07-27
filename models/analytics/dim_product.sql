@@ -108,6 +108,7 @@ SELECT
   , COALESCE ( dim_package_type_unit.package_type_name, 'Invalid' ) AS unit_package_type_name
   , outer_package_type_key
   , COALESCE ( dim_package_type_outer.package_type_name, 'Invalid' ) AS outer_package_type_name
+  , COALESCE ( stg_dim_product__external.category_key, -1 ) AS category_key
 FROM dim_product__add_undefined_record AS dim_product
 
 LEFT JOIN {{ ref ('dim_supplier') }} AS dim_supplier
@@ -124,3 +125,6 @@ ON dim_product.unit_package_type_key = dim_package_type_unit.package_type_key
 
 LEFT JOIN {{ ref ('dim_package_type') }} AS dim_package_type_outer
 ON dim_product.outer_package_type_key = dim_package_type_outer.package_type_key
+
+LEFT JOIN {{ ref ('stg_dim_product__external') }} AS stg_dim_product__external
+ON dim_product.product_key = stg_dim_product__external.product_key
