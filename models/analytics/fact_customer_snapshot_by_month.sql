@@ -56,6 +56,8 @@ WITH fact_customer_snapshot_by_month__summarize AS (
   SELECT
     *
     , SUM(sales_amount) OVER(PARTITION BY customer_key ORDER BY year_month) AS lifetime_sales_amount
+    , LAG(sales_amount, 1) OVER(PARTITION BY customer_key ORDER BY year_month) AS last_month_sales_amount
+    , SUM(sales_amount) OVER(PARTITION BY customer_key ORDER BY year_month) AS last_12months_sales_amount
   FROM fact_customer_snapshot_by_month__dense
 )
 
@@ -90,8 +92,8 @@ SELECT
   , customer_key
   , sales_amount
   , lifetime_sales_amount
-  -- , sales_amount_percentile
-  -- , lifetime_sales_amount_percentile
+  , last_month_sales_amount
+  , last_12months_sales_amount
   , sales_amount_monetary
   , lifetime_sales_amount_monetary
 FROM fact_customer_snapshot_by_month__percentile_segment
