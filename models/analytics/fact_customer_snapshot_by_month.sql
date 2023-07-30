@@ -10,12 +10,12 @@ WITH fact_customer_snapshot_by_month__summarize AS (
 , fact_customer_snapshot_by_month__get_unique_customer AS (
   SELECT DISTINCT customer_key
   FROM fact_customer_snapshot_by_month__summarize
-  )
+)
 
 , fact_customer_snapshot_by_month__get_unique_month AS (
   SELECT DISTINCT year_month
   FROM fact_customer_snapshot_by_month__summarize
-  )
+)
 
 , fact_customer_snapshot_by_month__filter_start_end_month AS (
   SELECT
@@ -57,7 +57,7 @@ WITH fact_customer_snapshot_by_month__summarize AS (
     *
     , SUM(sales_amount) OVER(PARTITION BY customer_key ORDER BY year_month) AS lifetime_sales_amount
     , LAG(sales_amount, 1) OVER(PARTITION BY customer_key ORDER BY year_month) AS last_month_sales_amount
-    , SUM(sales_amount) OVER(PARTITION BY customer_key ORDER BY year_month) AS last_12months_sales_amount
+    , SUM(sales_amount) OVER(PARTITION BY customer_key ORDER BY year_month ROWS BETWEEN 11 PRECEDING AND CURRENT ROW) AS last_12months_sales_amount
   FROM fact_customer_snapshot_by_month__dense
 )
 
@@ -65,7 +65,7 @@ WITH fact_customer_snapshot_by_month__summarize AS (
   SELECT
     *
     , PERCENT_RANK() OVER(PARTITION BY year_month ORDER BY sales_amount) AS sales_amount_percentile
-    , PERCENT_RANK() OVER(PARTITION BY year_month ORDER BY lifetime_sales_amount) AS lifetime_sales_amount_percentile
+    , PERCENT_RANK() OVER(PARTITION BY year_month ORDER BY lifetime_sales_amount ) AS lifetime_sales_amount_percentile
   FROM fact_customer_snapshot_by_month__calculate_cumulative
 )
 
