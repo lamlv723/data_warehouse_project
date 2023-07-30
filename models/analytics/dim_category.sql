@@ -45,8 +45,12 @@ WITH dim_category__source AS (
 )
 
 SELECT
-  category_key
-  , category_name
-  , parent_category_key
-  , category_level
-FROM dim_category__add_undefined_record
+  dim_category.category_key
+  , dim_category.category_name
+  , dim_category.category_level
+  , dim_category.parent_category_key
+  , COALESCE(dim_parent_category.category_name, 'Invalid') AS parent_category_name
+FROM dim_category__add_undefined_record AS dim_category
+
+LEFT JOIN dim_category__add_undefined_record AS dim_parent_category
+  ON dim_category.parent_category_key = dim_parent_category.category_key
