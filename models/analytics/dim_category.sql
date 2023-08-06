@@ -84,6 +84,42 @@ WITH dim_category__source AS (
   SELECT * FROM dim_category__level_4
 )
 
+, dim_category__add_undefined_record AS (
+  SELECT * FROM dim_category__union
+
+  UNION ALL
+  SELECT
+    -1 AS category_key
+    , 'Invalid' category_name
+    , -1 AS category_level
+    , -1 AS parent_category_key
+    , 'Invalid' parent_category_name
+    , -1 AS category_key_level_1
+    , 'Invalid' category_level_1
+    , -1 AS category_key_level_2
+    , 'Invalid' category_level_2
+    , -1 AS category_key_level_3
+    , 'Invalid' category_level_3
+    , -1 AS category_key_level_4
+    , 'Invalid' category_level_4
+
+  UNION ALL
+  SELECT
+    0 AS category_key
+    , 'Undefined' category_name
+    , 0 AS category_level
+    , 0 AS parent_category_key
+    , 'Undefined' parent_category_name
+    , 0 AS category_key_level_1
+    , 'Undefined' category_level_1
+    , 0 AS category_key_level_2
+    , 'Undefined' category_level_2
+    , 0 AS category_key_level_3
+    , 'Undefined' category_level_3
+    , 0 AS category_key_level_4
+    , 'Undefined' category_level_4
+)
+
 SELECT
   category_key
   , category_name
@@ -98,4 +134,4 @@ SELECT
   , category_level_3
   , category_key_level_4
   , category_level_4
-FROM dim_category__union
+FROM dim_category__add_undefined_record
