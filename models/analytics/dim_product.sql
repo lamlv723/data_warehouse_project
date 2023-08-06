@@ -113,6 +113,14 @@ SELECT
   , COALESCE ( dim_category.category_level, -1 ) AS category_level
   , COALESCE ( dim_category.parent_category_key, -1 ) AS parent_category_key
   , COALESCE ( dim_category.parent_category_name, 'Invalid' ) AS parent_category_name
+  , COALESCE ( dim_category.category_key_level_1, -1 ) AS category_key_level_1
+  , COALESCE ( dim_category.category_level_1, 'Invalid' ) AS category_level_1
+  , COALESCE ( dim_category.category_key_level_2, -1 ) AS category_key_level_2
+  , COALESCE ( dim_category.category_level_2, 'Invalid' ) AS category_level_2
+  , COALESCE ( dim_category.category_key_level_3, -1 ) AS category_key_level_3
+  , COALESCE ( dim_category.category_level_3, 'Invalid' ) AS category_level_3
+  , COALESCE ( dim_category.category_key_level_4, -1 ) AS category_key_level_4
+  , COALESCE ( dim_category.category_level_4, 'Invalid' ) AS category_level_4
 FROM dim_product__add_undefined_record AS dim_product
 
 LEFT JOIN {{ ref ('dim_supplier') }} AS dim_supplier
