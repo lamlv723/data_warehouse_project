@@ -1,4 +1,6 @@
-# About
+# Data Warehouse Project
+
+## 💥 About
 
 Hello! I'm Lam, and this is my project to show my data warehouse skills.
 
@@ -18,17 +20,20 @@ Techstack that I used in this project:
 
 - Sales Orders
 - Purchase Orders
-## 📃 How to check this project
+
+## 🚀 How to check this project
+
 You can find the ERD at [`diagrams`](diagrams).
+
+You can find data models at [`models/analytics`](models/analytics).
+
+You can find data quality tests inside the `yml` files at [`models/analytics`](models/analytics).
 
 *Sales order line ERD:*
 ![Sales order line ERD](diagrams/diagram_sales_order_line.png)
 *Purchase order line ERD:*
 ![Purchase order line ERD](/diagrams/diagram_purchase_order_line.png)
 
-You can find data models at [`models/analytics`](models/analytics).
-
-You can find data quality tests inside the `yml` files at [`models/analytics`](models/analytics).
 
 ## More info
 - Raw dataset: [Wide World Importers](https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-what-is?view=sql-server-ver16)
