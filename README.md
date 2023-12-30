@@ -2,9 +2,9 @@
 
 ## 💥 About
 
-Hello! I'm Lam, and this is my project to show my data warehouse skills.
+Hello! I'm Lam, and this is my project to learn how to create a data warehouse. In this project, I've followed Kimball's modeling techniques.
 
-Techstack that I used in this project:
+Techstacks that I used in this project:
 - ELT tool: dbt
 - Visualization: Looker Studio
 - Data Lake, Data Warehouse: Google BigQuery
