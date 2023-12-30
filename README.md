@@ -6,7 +6,7 @@ Hello! I'm Lam, and this is my project to learn how to create a data warehouse. 
 
 Techstacks that I used in this project:
 - ELT tool: dbt
-- Visualization: Looker Studio
+- Visualization: MS Power BI
 - Data Lake, Data Warehouse: Google BigQuery
 
 ## 🎯 Knowledge & techniques that I achieved
@@ -20,10 +20,11 @@ Techstacks that I used in this project:
 
 - Sales Orders
 - Purchase Orders
+- Purchase Orders Snapshot
 
 ## 🚀 How to check this project
 
-You can find the ERD at [`diagrams`](diagrams).
+You can find the diagrams at [`diagrams`](diagrams).
 
 You can find data models at [`models/analytics`](models/analytics).
 
@@ -33,7 +34,8 @@ You can find data quality tests inside the `yml` files at [`models/analytics`](m
 ![Sales order line ERD](diagrams/diagram_sales_order_line.png)
 *Purchase order line ERD:*
 ![Purchase order line ERD](/diagrams/diagram_purchase_order_line.png)
-
+*Quick look on a report:*
+![Sales order report](/pbix/sales_order_report.png)
 
 ## More info
 - Raw dataset: [Wide World Importers](https://learn.microsoft.com/en-us/sql/samples/wide-world-importers-what-is?view=sql-server-ver16)
