@@ -31,7 +31,7 @@ Techstacks that I used in this project:
 
 **Quick look on the report:**
 ![Sales order report1](./pbix/Backup/v2_preview_1.png)
-![Sales order report2](./pbix/Backup/v2_preview_2.png)
+![Sales order report2](./pbix/Backup/v2_preview_3_withtooltip.png)
 **Sales order line ERD:**
 ![Sales order line ERD](./diagrams/diagram_sales_order_line.png)
 **Purchase order line ERD:**
