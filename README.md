@@ -24,20 +24,17 @@ Techstacks that I used in this project:
 
 ## 🚀 How to check this project
 
-You can download the final report at [`Wide World Importers v2_Import.pbix`](./pbix/Wide%20World%20Importers%20v2_Import.pbix).
+- You can download the final report at [`Wide World Importers v2_Import.pbix`](./pbix/Wide%20World%20Importers%20v2_Import.pbix).
+- You can find the diagrams at [`diagrams`](./diagrams).
+- You can find data models at [`models/analytics`](./models/analytics).
+- You can find data quality tests inside the `yml` files at [`models/analytics`](./models/analytics).
 
-You can find the diagrams at [`diagrams`](./diagrams).
-
-You can find data models at [`models/analytics`](./models/analytics).
-
-You can find data quality tests inside the `yml` files at [`models/analytics`](./models/analytics).
-
-*Quick look on a report:*
+**Quick look on the report:**
 ![Sales order report1](./pbix/Backup/v2_preview_1.png)
 ![Sales order report2](./pbix/Backup/v2_preview_2.png)
-*Sales order line ERD:*
+**Sales order line ERD:**
 ![Sales order line ERD](./diagrams/diagram_sales_order_line.png)
-*Purchase order line ERD:*
+**Purchase order line ERD:**
 ![Purchase order line ERD](./diagrams/diagram_purchase_order_line.png)
 
 ## More info
